@@ -104,41 +104,5 @@ The Kubernetes control plane manages the cluster’s overall state and handles s
 If you'd like, I can generate a diagram of this workflow. Would that be helpful?
 
 
-+----------------+        +-------------+        +------------+        +-------------------+
-| User submits   |        | API Server  |        | etcd       |        | Controller Manager|
-| Deployment     |        |             |        | (Cluster   |        | - Replication     |
-| YAML manifest  +------->+ Validates   +------->+ State Store|        |   Controller      |
-| via kubectl    |        | & Updates   |        |            |        | - Endpoint Ctrl.  |
-+----------------+        +-------------+        +------------+        +-------------------+
-                                                          |                     |
-                                                          |                     |
-                                                          |                     |
-                                              +-----------v-----------+         |
-                                              | Scheduler              |         |
-                                              | - Assigns Pods to      |         |
-                                              |   Suitable Nodes       |         |
-                                              +-----------+-----------+         |
-                                                          |                     |
-                                                          |                     |
-                                               +----------v----------+          |
-                                               | kubelet (on Nodes)  |<---------+
-                                               | - Pulls Container   |
-                                               |   Images            |
-                                               | - Starts Pods       |
-                                               +----------+----------+
-                                                          |
-                                                          |
-                                             +------------v------------+
-                                             | kube-proxy               |
-                                             | - Handles Networking     |
-                                             |   Between Pods & Services|
-                                             +------------+------------+
-                                                          |
-                                                          |
-                                             +------------v------------+
-                                             | CoreDNS                 |
-                                             | - Provides DNS          |
-                                             |   Resolution            |
-                                             +-------------------------+
-```
++----------------+ +-------------+ +------------+ +-------------------+ | User submits | | API Server | | etcd | | Controller Manager| | Deployment | | | | (Cluster | | - Replication | | YAML manifest +------->+ Validates +------->+ State Store| | Controller | | via kubectl | | & Updates | | | | - Endpoint Ctrl. | +----------------+ +-------------+ +------------+ +-------------------+ | | | | | | +-----------v-----------+ | | Scheduler | | | - Assigns Pods to | | | Suitable Nodes | | +-----------+-----------+ | | | | | +----------v----------+ | | kubelet (on Nodes) |<---------+ | - Pulls Container | | Images | | - Starts Pods | +----------+----------+ | | +------------v------------+ | kube-proxy | | - Handles Networking | | Between Pods & Services| +------------+------------+ | | +------------v------------+ | CoreDNS | | - Provides DNS | | Resolution | +-------------------------+
 
